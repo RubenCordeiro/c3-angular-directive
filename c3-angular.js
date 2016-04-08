@@ -1,4 +1,4 @@
-/*! c3-angular - v1.2.0 - 2016-03-24
+/*! c3-angular - v1.2.0 - 2016-04-08
 * https://github.com/jettro/c3-angular-directive
 * Copyright (c) 2016 ; Licensed  */
 angular.module('gridshore.c3js.chart', []);
@@ -792,6 +792,8 @@ angular.module('gridshore.c3js.chart')
  * 
  *   Array consisting of objects with some properties for the different columns: [{"id": "data1", "type": "line"}, {"id": "data2", "type": "bar"}]
  *
+ * @param {Array} chart-group Provide a reference to a collection that contains the groups.
+ *
  * @param {Object} chart-x Provide information about the x column. Used when adding dynamic data to specify the field that contains the x data value.
  * 
  *   Object containing reference to the id of the x data field: {"id": "x", "name": "My Data points"}
@@ -899,6 +901,7 @@ function C3Chart ($timeout) {
             "enableZoom": "@enableZoom",
             "chartData": "=chartData",
             "chartColumns": "=chartColumns",
+            "chartGroup": "=chartGroup",
             "chartX": "=chartX",
             "callbackFunction": "&",
             "emptyLabel": "@emptyLabel"
@@ -1355,8 +1358,17 @@ function ChartController($scope, $timeout) {
 
         $scope.config = config;
 
+        if ($scope.chartGroup) {
+            $scope.groups = [$scope.chartGroup];
+        }
+
         if ($scope.chartData && $scope.chartColumns) {
             $scope.$watch('chartData', function () {
+
+                if ($scope.chartGroup) {
+                    $scope.groups = [$scope.chartGroup];
+                }
+
                 loadChartData();
             }, true);
         } else {
@@ -1690,6 +1702,7 @@ function ChartController($scope, $timeout) {
         } else {
             $scope.config.data.unload = true;
             $scope.chart.load($scope.config.data);
+            $scope.chart.groups($scope.config.data.groups);
         }
     }
 }
