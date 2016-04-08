@@ -72,6 +72,8 @@ angular.module('gridshore.c3js.chart')
  * 
  *   Array consisting of objects with some properties for the different columns: [{"id": "data1", "type": "line"}, {"id": "data2", "type": "bar"}]
  *
+ * @param {Array} chart-group Provide a reference to a collection that contains the groups.
+ *
  * @param {Object} chart-x Provide information about the x column. Used when adding dynamic data to specify the field that contains the x data value.
  * 
  *   Object containing reference to the id of the x data field: {"id": "x", "name": "My Data points"}
@@ -179,6 +181,7 @@ function C3Chart ($timeout) {
             "enableZoom": "@enableZoom",
             "chartData": "=chartData",
             "chartColumns": "=chartColumns",
+            "chartGroup": "=chartGroup",
             "chartX": "=chartX",
             "callbackFunction": "&",
             "emptyLabel": "@emptyLabel"

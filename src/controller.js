@@ -326,8 +326,17 @@ function ChartController($scope, $timeout) {
 
         $scope.config = config;
 
+        if ($scope.chartGroup) {
+            $scope.groups = [$scope.chartGroup];
+        }
+
         if ($scope.chartData && $scope.chartColumns) {
             $scope.$watch('chartData', function () {
+
+                if ($scope.chartGroup) {
+                    $scope.groups = [$scope.chartGroup];
+                }
+
                 loadChartData();
             }, true);
         } else {
@@ -661,6 +670,7 @@ function ChartController($scope, $timeout) {
         } else {
             $scope.config.data.unload = true;
             $scope.chart.load($scope.config.data);
+            $scope.chart.groups($scope.config.data.groups);
         }
     }
 }
